@@ -1,0 +1,54 @@
+# Entorno virtual
+.venv/
+env/
+venv/
+
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.py.class
+
+# Notebooks temporales
+.ipynb_checkpoints/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Configuración de editores
+.vscode/
+.idea/
+*.code-workspace
+
+# Dependencias
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Datos
+data/raw/
+data/processed/
+*.csv
+*.tsv
+*.xlsx
+*.json
+*.parquet
+
+# Logs y cachés
+*.log
+logs/
+.cache/
+__cache__/
+
+# Archivos de entorno
+.env
+*.env
+
+# Archivos temporales
+*.tmp
+*.bak
+*.swp
