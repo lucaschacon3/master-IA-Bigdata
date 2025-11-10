@@ -1,9 +1,5 @@
--- ==============================================
--- 💾 EJERCICIO 6 - BASE DE DATOS DE LIBROS
--- ==============================================
 
--- 1️⃣ CREAR LA BASE DE DATOS (solo en PostgreSQL local, no en Programiz)
--- En Programiz no hace falta este paso, ya trabaja sobre una DB activa.
+-- 1️⃣ CREAR LA BASE DE DATOS
 CREATE DATABASE books_db;
 
 -- ==============================================
