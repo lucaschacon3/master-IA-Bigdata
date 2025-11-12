@@ -1,7 +1,7 @@
 # Máster en Inteligencia Artificial y Big Data
 
 Repositorio general con el contenido, prácticas y proyectos desarrollados durante el Máster en IA & Big Data.  
-El objetivo es centralizar todo el trabajo de las distintas asignaturas en una única estructura organizada y reutilizable.
+El objetivo es centralizar todo el trabajo de las distintas asignaturas en una única estructura organizada y reutilizable. 
 
 ---
 
