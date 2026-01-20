@@ -8,12 +8,10 @@ El objetivo es centralizar todo el trabajo de las distintas asignaturas en una �
 ## ⚙️ Instalación
 
 ```bash
-git clone https://github.com/<tu-usuario>/master-ia-bigdata.git
+git clone https://github.com/lucaschacon3/master-IA-Bigdata.git
 cd master-ia-bigdata
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-
----
 
