@@ -37,7 +37,7 @@ print("Matriz de Confusión:")
 print(confusion_matrix(Y_test, y_pred))
 
 
-for k in [1, 15]:
+for k in range(1,15):
     modelo = KNeighborsClassifier(n_neighbors=k)
     modelo.fit(X_train, Y_train)
     pred = modelo.predict(X_test)
