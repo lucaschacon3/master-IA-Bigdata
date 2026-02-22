@@ -30,6 +30,7 @@ build/
 .eggs/
 
 # Datos
+data
 data/raw/
 data/processed/
 *.csv
