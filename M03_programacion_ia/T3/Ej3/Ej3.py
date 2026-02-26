@@ -1,5 +1,5 @@
 import os
-# ESTO EVITA QUE TENSORFLOW BUSQUE LA GPU Y CHLOQUE CON TUS DRIVERS
+# Evita que tensorflow busque la GPU Y choque con los DRIVERS
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 import tensorflow as tf

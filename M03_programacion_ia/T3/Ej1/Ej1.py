@@ -101,7 +101,7 @@ plt.show()
 print("\nReporte de clasificación:")
 print(classification_report(y_test, y_pred_mejor))
 
-# Opcional: Mostrar algunas predicciones con imágenes
+# Mostrar algunas predicciones con imágenes
 fig, axes = plt.subplots(2, 5, figsize=(10,5))
 for i, ax in enumerate(axes.flat):
     ax.imshow(X_test[i].reshape(28,28), cmap='gray')
