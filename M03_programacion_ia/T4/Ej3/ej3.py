@@ -42,7 +42,7 @@ param_grid = {
     'max_depth': [4, 5],
     'learning_rate': [0.05],
     'n_estimators': [500],
-    'reg_lambda': [2, 5, 10] # Probamos diferentes niveles de regularización L2
+    'reg_lambda': [2, 5, 10] # Diferentes niveles de regularización L2
 }
 
 grid_xgb = GridSearchCV(XGBRegressor(random_state=42), param_grid, cv=3, scoring='r2', n_jobs=-1)
@@ -60,15 +60,6 @@ mlp.fit(X_train, y_train)
 mlp_time = time.time() - start_mlp
 
 print(f"R² Red Neuronal: {r2_score(y_test, mlp.predict(X_test)):.4f} | Tiempo: {mlp_time:.2f}s")
-
-# --- 3. ANÁLISIS DE RESULTADOS ---
-"""
-VERDICTO TÉCNICO:
-- Elegimos XGBoost Optimizado. Aunque la Red Neuronal es potente, en datos tabulares
-  el Gradient Boosting suele generalizar mejor con menos coste computacional.
-- La decisión de usar reg_lambda=10 (o el mejor hallado) se basa en reducir la varianza
-  detectada en el Ejercicio 2.
-"""
 
 # --- 4. DESPLIEGUE (Guardado de artefactos) ---
 joblib.dump(best_xgb, 'modelo_final.pkl')
