@@ -32,6 +32,7 @@ pip install -r requirements.txt
         - CV (Computer Visión).
         - Sistemas expertos.
         - Robótica - IoT.
+    - Ética y legalidad
 - **Herramientas para el desarrollo de IA.**
     - Lenguajes de programación para la IA.
         - Python.
@@ -98,9 +99,3 @@ pip install -r requirements.txt
     - RAG - BBDD vectoriales.
     - Transfer Learning - Finetunning (LoRa, QLoRa).
     - IA multimodal
-- **Ética y legalidad.**
-    - Privacy by desing.
-    - Peligros y casos reales.
-    - EU AI Act - AESIA
-    - Shadow AI
-    - Gobernanza y compliance.
