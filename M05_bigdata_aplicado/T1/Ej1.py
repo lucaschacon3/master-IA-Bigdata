@@ -1,4 +1,4 @@
-import os
+
 import time
 import pandas as pd
 import polars as pl
@@ -30,7 +30,6 @@ pl_ratings = pl.read_csv(file_ratings)
 pl_movies = pl.read_csv(file_movies)
 df_pl = pl_ratings.join(pl_movies, on='movieId')
 
-# Corrección: Parsear el string a datetime
 df_pl = df_pl.with_columns(pl.col("timestamp").str.to_datetime("%Y-%m-%d %H:%M:%S").alias("date"))
 action_pl = df_pl.filter((pl.col("genres").str.contains("Action")) & (pl.col("rating") >= 4))
 stats_pl = df_pl.group_by("userId").agg([pl.col("rating").mean().alias("mean"), pl.col("rating").std().alias("std")])
@@ -43,7 +42,7 @@ start_pl_lazy = time.time()
 q_ratings = pl.scan_csv(file_ratings)
 q_movies = pl.scan_csv(file_movies)
 
-# Corrección: Parsear el string a datetime en el plan de ejecución
+
 q_pl = q_ratings.join(q_movies, on='movieId').with_columns(pl.col("timestamp").str.to_datetime("%Y-%m-%d %H:%M:%S").alias("date"))
 
 action_lazy_q = q_pl.filter((pl.col("genres").str.contains("Action")) & (pl.col("rating") >= 4))
@@ -64,7 +63,6 @@ sp_ratings = spark.read.csv(file_ratings, header=True, inferSchema=True)
 sp_movies = spark.read.csv(file_movies, header=True, inferSchema=True)
 df_sp = sp_ratings.join(sp_movies, "movieId")
 
-# Corrección: Usar to_timestamp para castear el string a fecha real de Spark
 df_sp = df_sp.withColumn("date", to_timestamp(col("timestamp"), "yyyy-MM-dd HH:mm:ss"))
 action_sp = df_sp.filter(col("genres").contains("Action") & (col("rating") >= 4))
 stats_sp = df_sp.groupBy("userId").agg(mean("rating").alias("mean"), stddev("rating").alias("std"))
