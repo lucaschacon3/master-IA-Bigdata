@@ -47,7 +47,7 @@ __cache__/
 
 # Archivos de entorno
 .env
-*.env
+.env*
 
 # Archivos temporales
 *.tmp
