@@ -16,7 +16,7 @@ print("\nNulos iniciales:\n", df.isnull().sum())
 df = df.drop_duplicates()
 
 print("\n" + "-"*60)
-print("CAPTURA 1: TRAS ELIMINAR DUPLICADOS")
+print("1: ELIMINAR DUPLICADOS")
 print("-" * 60)
 print("Shape tras eliminar duplicados:", df.shape)
 
@@ -34,7 +34,7 @@ if 'key' in df.columns:
     df = df[df['key'].str.strip() != '']
 
 print("\n" + "-"*60)
-print("CAPTURA 2: INTEGRIDAD DE DATOS")
+print("2: INTEGRIDAD DE DATOS")
 print("-" * 60)
 print("Tipos de datos actuales:\n", df.dtypes)
 if 'fare_amount' in df.columns:
@@ -50,7 +50,7 @@ if 'fare_amount' in df.columns:
     df['fare_amount'] = df['fare_amount'].fillna(df['fare_amount'].median())
 
 print("\n" + "-"*60)
-print("CAPTURA 3: NULOS TRAS LIMPIEZA")
+print("3: NULOS TRAS LIMPIEZA")
 print("-" * 60)
 print(df.isnull().sum())
 
@@ -66,7 +66,7 @@ if cols_to_scale:
     df[cols_to_scale] = scaler.fit_transform(df[cols_to_scale])
 
 print("\n" + "-"*60)
-print("CAPTURA 4: DATOS ESTANDARIZADOS")
+print("4: DATOS ESTANDARIZADOS")
 print("-" * 60)
 if cols_to_scale:
     print(df[cols_to_scale].head())
