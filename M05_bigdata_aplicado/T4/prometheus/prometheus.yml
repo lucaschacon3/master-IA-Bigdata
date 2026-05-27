@@ -1,0 +1,24 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: "hadoop-namenode"
+    static_configs:
+      - targets: ["namenode:9010"]
+
+  - job_name: "hadoop-datanode"
+    static_configs:
+      - targets: ["datanode:9011"]
+
+  - job_name: "hadoop-resourcemanager"
+    static_configs:
+      - targets: ["resourcemanager:9012"]
+
+  - job_name: "hadoop-nodemanager"
+    static_configs:
+      - targets: ["nodemanager:9013"]

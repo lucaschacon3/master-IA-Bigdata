@@ -1,0 +1,13 @@
+---
+ssl: false
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+rules:
+  - pattern: "Hadoop:*"
+  - pattern: "java.lang:*"
+  - pattern: "java.lang:type=Memory"
+    name: jvm_memory_bytes
+    attrNameSnakeCase: true
+  - pattern: "java.lang:type=OperatingSystem"
+  - pattern: "Hadoop:service=NameNode,name=*"
+  - pattern: "Hadoop:service=DataNode,name=*"

@@ -1,0 +1,113 @@
+version: "3.8"
+
+services:
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    container_name: namenode
+    hostname: namenode
+    ports:
+      - "9870:9870"
+      - "9010:9010"
+    environment:
+      - CLUSTER_NAME=test
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
+      - HDFS_CONF_dfs_replication=1
+      - HDFS_CONF_dfs_namenode_datanode_registration_ip_hostname_check=false
+      - HDFS_NAMENODE_OPTS=-javaagent:/opt/jmx_exporter/jmx_prometheus_javaagent-0.20.0.jar=9010:/opt/jmx_exporter/prometheus_config.yaml
+    volumes:
+      - namenode_data:/hadoop/dfs/name
+      - ./jmx/jmx_prometheus_javaagent-0.20.0.jar:/opt/jmx_exporter/jmx_prometheus_javaagent-0.20.0.jar
+      - ./jmx/prometheus_config.yaml:/opt/jmx_exporter/prometheus_config.yaml
+
+  datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: datanode
+    hostname: datanode
+    ports:
+      - "9864:9864"
+      - "9866:9866"
+      - "9011:9011"
+    environment:
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
+      - HDFS_CONF_dfs_replication=1
+      - HDFS_CONF_dfs_namenode_datanode_registration_ip_hostname_check=false
+      - HDFS_DATANODE_OPTS=-javaagent:/opt/jmx_exporter/jmx_prometheus_javaagent-0.20.0.jar=9011:/opt/jmx_exporter/prometheus_config.yaml
+    volumes:
+      - datanode_data:/hadoop/dfs/data
+      - ./jmx/jmx_prometheus_javaagent-0.20.0.jar:/opt/jmx_exporter/jmx_prometheus_javaagent-0.20.0.jar
+      - ./jmx/prometheus_config.yaml:/opt/jmx_exporter/prometheus_config.yaml
+    depends_on:
+      - namenode
+
+  resourcemanager:
+    image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
+    container_name: resourcemanager
+    hostname: resourcemanager
+    ports:
+      - "8088:8088"
+      - "8032:8032"
+      - "9012:9012"
+    environment:
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
+      - YARN_CONF_yarn_resourcemanager_hostname=resourcemanager
+      - YARN_RESOURCEMANAGER_OPTS=-javaagent:/opt/jmx_exporter/jmx_prometheus_javaagent-0.20.0.jar=9012:/opt/jmx_exporter/prometheus_config.yaml
+    volumes:
+      - ./jmx/jmx_prometheus_javaagent-0.20.0.jar:/opt/jmx_exporter/jmx_prometheus_javaagent-0.20.0.jar
+      - ./jmx/prometheus_config.yaml:/opt/jmx_exporter/prometheus_config.yaml
+    depends_on:
+      - namenode
+      - datanode
+
+  nodemanager:
+    image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
+    container_name: nodemanager
+    hostname: nodemanager
+    ports:
+      - "8042:8042"
+      - "9013:9013"
+    environment:
+      - CORE_CONF_fs_defaultFS=hdfs://namenode:9000
+      - YARN_CONF_yarn_resourcemanager_hostname=resourcemanager
+      - YARN_NODEMANAGER_OPTS=-javaagent:/opt/jmx_exporter/jmx_prometheus_javaagent-0.20.0.jar=9013:/opt/jmx_exporter/prometheus_config.yaml
+    volumes:
+      - ./jmx/jmx_prometheus_javaagent-0.20.0.jar:/opt/jmx_exporter/jmx_prometheus_javaagent-0.20.0.jar
+      - ./jmx/prometheus_config.yaml:/opt/jmx_exporter/prometheus_config.yaml
+    depends_on:
+      - namenode
+      - datanode
+      - resourcemanager
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    hostname: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - namenode
+      - datanode
+      - resourcemanager
+      - nodemanager
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    hostname: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_INSTALL_PLUGINS=
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+    depends_on:
+      - prometheus
+
+volumes:
+  namenode_data:
+  datanode_data:
+  grafana_data:
